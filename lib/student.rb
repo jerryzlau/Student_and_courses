@@ -18,20 +18,23 @@ class Student
   end
 
   def enroll(course_object)
+    error_check(course_object)
     #returns if that object already exist
     return if @courses.include?(course_object)
     @courses << course_object #add the course object
     @courses.last.students << self #update the course's list of student
   end
 
+  def error_check(course_object)
+    if @courses.any? {|course| course.conflicts_with?(course_object)}
+      raise "There is a time conflict, please check schedule."
+    end
+  end
+
   def course_load
-    course_hash = {}
+    course_hash = Hash.new(0)
     @courses.each do |course|
-      if course_hash.has_key?(course.department)
-        course_hash[course.department] += course.credits
-      else
-        course_hash[course.department] = course.credits
-      end
+      course_hash[course.department] += course.credits
     end
     course_hash
   end

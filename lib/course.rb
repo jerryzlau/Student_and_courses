@@ -51,12 +51,14 @@
 
 class Course
 
-  attr_reader :name, :department, :credits
+  attr_reader :name, :department, :credits, :days, :time_block
 
-  def initialize(name, department, credits)
+  def initialize(name, department, credits, days, time_block)
     @name = name
     @department = department
     @credits = credits
+    @days = days
+    @time_block = time_block
     @students = []
   end
 
@@ -66,6 +68,14 @@ class Course
 
   def add_student(student)
     student.enroll(self)
+  end
+
+  def conflicts_with?(course_object)
+    if (self.days & course_object.days) == []
+      false
+    else
+      self.time_block == course_object.time_block
+    end
   end
 
 
