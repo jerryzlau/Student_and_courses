@@ -51,4 +51,22 @@
 
 class Course
 
+  attr_reader :name, :department, :credits
+
+  def initialize(name, department, credits)
+    @name = name
+    @department = department
+    @credits = credits
+    @students = []
+  end
+
+  def students
+    @students
+  end
+
+  def add_student(student)
+    student.enroll(self)
+  end
+
+
 end
