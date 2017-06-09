@@ -62,7 +62,7 @@ class Course
     @students = []
   end
 
-  def students
+  def students  # This is an attribute reader, and can be integrated in line 54
     @students
   end
 
@@ -71,11 +71,8 @@ class Course
   end
 
   def conflicts_with?(course_object)
-    if (self.days & course_object.days) == []
-      false
-    else
-      self.time_block == course_object.time_block
-    end
+    # Isn't this identical?
+    (self.days & course_object.days) != [] || self.time_block == course_object.time_block
   end
 
 
